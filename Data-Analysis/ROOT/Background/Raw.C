@@ -1,0 +1,240 @@
+{
+  gROOT->SetStyle("Plain");
+  gStyle->SetOptStat(1111111); // stats box                                                                                                                  
+  gStyle->SetOptFit(0); // fit info box                                                                                                                      
+  gStyle->GetAttDate()->SetTextColor(1);
+  gStyle->SetLabelFont(132,"XYZ");
+  gStyle->SetTextFont(132);
+  gStyle->SetTitleFont(132,"XYZ");
+  gStyle->SetPalette(1);
+  gROOT->ForceStyle();
+
+  TCanvas *c0 = new TCanvas("c0"," ",800,600);
+  //TCanvas *c1 = new TCanvas("c1","",800,600);
+
+  FILE *fp;
+  int i;
+  const char * filename = "Background_1_1_high_energy_600_1.tsv";
+  const char * filename1 = "Background_1_1_high_energy_600_01_06_2019.tsv";
+  const char * filename2 = "Background_1_1_high_energy_600_05_12_2019.tsv";
+  const char * filename3 = "Background_1_1_high_energy_600_06_12_2019.tsv";
+  const char * filename4 = "Background_1_1_high_energy_600_25_06_2019.tsv";
+  const char * filename5 = "Background_1_1_high_energy_600_29_05_2019.tsv";
+  const char * filename6 = "Background_1_1_high_energy_600_12_02_2020.tsv";
+  const char * filename7 = "Background_1_1_high_energy_600_13_02_2020.tsv";
+  const char * filename8 = "Background_1_1_high_energy_600_18_02_2020.tsv";
+  const char * filename9 = "Background_1_1_high_energy_600_20_02_2020.tsv";
+  const char * filename10 = "Background_1_1_high_energy_600_28_02_2020.tsv";
+  
+  TH1F* h1 = new TH1F("h1","Channel",4096,0,4095);
+  TH1F* h2 = new TH1F("h2","",4096,0,4095);
+  TH1F* h3 = new TH1F("h3","",4096,0,6000);
+  TH1F* h4 = new TH1F("h4","",4096,0,4095);
+  TH1F* h5 = new TH1F("h5","",4096,0,4095);
+  TH1F* h6 = new TH1F("h6","",4096,0,4095);
+  TH1F* h7 = new TH1F("h7","",4096,0,4095);
+  TH1F* h8 = new TH1F("h8","",4096,0,4095);
+  TH1F* h9 = new TH1F("h9","",4096,0,4095);
+  TH1F* h10 = new TH1F("h10","",4096,0,4095);
+  TH1F* h11 = new TH1F("h11","",4096,0,4095);
+  
+  const int numL = 4096;
+  float *x = new float[numL];
+  float *y = new float[numL];
+  float *z = new float[numL];
+
+  fp = fopen(filename,"r");
+  for(i=0;i<numL;i++)
+    {
+      fscanf(fp,"%f %f %f",&x[i],&y[i],&z[i]);
+
+      h1->SetBinContent(i,z[i]);
+
+    }
+  fclose(fp);
+
+  fp = fopen(filename1,"r");
+  for(i=0;i<numL;i++)
+    {
+      fscanf(fp,"%f %f %f",&x[i],&y[i],&z[i]);
+
+      h2->SetBinContent(i,z[i]);
+
+    }
+  fclose(fp);
+
+  fp = fopen(filename2,"r");
+  for(i=0;i<numL;i++)
+    {
+      fscanf(fp,"%f %f %f",&x[i],&y[i],&z[i]);
+
+      h3->SetBinContent(i,z[i]);
+
+    }
+  fclose(fp);
+
+  fp = fopen(filename3,"r");
+  for(i=0;i<numL;i++)
+    {
+      fscanf(fp,"%f %f %f",&x[i],&y[i],&z[i]);
+
+      h4->SetBinContent(i,z[i]);
+
+    }
+  fclose(fp);
+
+  fp = fopen(filename4,"r");
+  for(i=0;i<numL;i++)
+    {
+      fscanf(fp,"%f %f %f",&x[i],&y[i],&z[i]);
+
+      h5->SetBinContent(i,z[i]);
+
+    }
+  fclose(fp);
+
+  fp = fopen(filename5,"r");
+  for(i=0;i<numL;i++)
+    {
+      fscanf(fp,"%f %f %f",&x[i],&y[i],&z[i]);
+
+      h6->SetBinContent(i,z[i]);
+
+    }
+  fclose(fp);
+
+  fp = fopen(filename6,"r");
+  for(i=0;i<numL;i++)
+    {
+      fscanf(fp,"%f %f %f",&x[i],&y[i],&z[i]);
+
+      h7->SetBinContent(i,z[i]);
+
+    }
+  fclose(fp);
+
+  fp = fopen(filename7,"r");
+  for(i=0;i<numL;i++)
+    {
+      fscanf(fp,"%f %f %f",&x[i],&y[i],&z[i]);
+
+      h8->SetBinContent(i,z[i]);
+
+    }
+  fclose(fp);
+
+  fp = fopen(filename8,"r");
+  for(i=0;i<numL;i++)
+    {
+      fscanf(fp,"%f %f",&x[i],&y[i]);
+
+      h9->SetBinContent(i,y[i]);
+
+    }
+  fclose(fp);
+
+  fp = fopen(filename9,"r");
+  for(i=0;i<numL;i++)
+    {
+      fscanf(fp,"%f %f",&x[i],&y[i]);
+
+      h10->SetBinContent(i,y[i]);
+
+    }
+  fclose(fp);
+
+  fp = fopen(filename10,"r");
+  for(i=0;i<numL;i++)
+    {
+      fscanf(fp,"%f %f",&x[i],&y[i]);
+
+      h11->SetBinContent(i,z[i]);
+
+    }
+  fclose(fp);
+
+  /* auto sum_h = new TH1F("sum_h","Channel",4096,0,4095);
+  sum_h->Add(h1,1.);
+  sum_h->Add(h2,1.);
+  sum_h->Add(h3,1.);
+  sum_h->Add(h4,1.);
+  sum_h->Add(h5,1.);
+  sum_h->Add(h6,1.);
+  sum_h->Add(h7,1.);
+  sum_h->Add(h8,1.);
+  sum_h->Add(h9,1.);
+  sum_h->Add(h10,1.);*/
+
+  c0->cd();
+  c0->SetLogy();
+  h11->Draw();
+   
+  /*Double_t rng[6]={105,129,129,150,193,220};
+
+  Double_t par[9];
+  TF1 *g1    = new TF1("g1","gaus",rng[0],rng[1]);
+  TF1 *g2    = new TF1("g2","gaus",rng[2],rng[3]);
+   TF1 *g3    = new TF1("g3","gaus",rng[4],rng[5]);
+   TF1 *total = new TF1("total","gaus(0)+gaus(3)+gaus(6)",rng[0]-1,rng[5]+1);
+   total->SetLineColor(2);
+   h8->Fit(g1,"R");
+   h8->Fit(g2,"R+");
+   h8->Fit(g3,"R+");
+   g1->GetParameters(&par[0]);
+   g2->GetParameters(&par[3]);
+   g3->GetParameters(&par[6]);
+   total->SetParameters(par);
+   h8->Fit(total,"R+");
+
+   cout << "m1: " << par[1] << endl;
+   cout	<< "m2: "      << par[4] << endl;
+   cout	<< "m3: "	<< par[7] << endl;
+   
+   Double_t chn[3]={par[1],par[4],par[7]};
+   Double_t enr[3]={1460.8,1764.5,2614.5};
+
+   TGraphErrors graph(3,chn,enr,nullptr,nullptr);
+   TF1 f("","[0]+x*[1]",rng[0]-1,rng[5]+1);
+   graph.Fit(&f);*/
+    
+  //sum_h->Draw();
+  /*h1->Draw("Same"); //drawing histo
+  h2->SetLineColor(kRed);
+  h2->Draw("Same");
+  h3->SetLineColor(kBlack);
+  h3->Draw("Same");
+  h4->SetLineColor(kGreen);
+  h4->Draw("Same");
+  h5->SetLineColor(kYellow);
+  h5->Draw("Same");
+  h6->SetLineColor(kOrange);
+  h6->Draw("Same");
+  h7->SetLineColor(kViolet);
+  h7->Draw("Same");
+  h8->SetLineColor(kGray);
+  h8->Draw("Same");
+  h9->SetLineColor(kAzure);
+  h9->Draw("Same");
+  h10->SetLineColor(kCyan);
+  h10->Draw("Same");
+
+  TLegend leg(.1,.7,.3,.9,"");
+  leg.SetFillColor(0);
+  leg.AddEntry(&sum_h,"Total");
+  leg.AddEntry(&h1,"06_06_2019");
+  leg.AddEntry(&h2,"01_06_2019");
+  leg.AddEntry(&h3,"05_12_2019");
+  leg.AddEntry(&h4,"06_12_2019");
+  leg.AddEntry(&h5,"25_06_2019");
+  leg.AddEntry(&h6,"29_05_2019");
+  leg.AddEntry(&h7,"12_02_2020");
+  leg.AddEntry(&h8,"13_02_2020");
+  leg.AddEntry(&h9,"18_02_2020");
+  leg.AddEntry(&h10,"20_02_2020");
+  leg.Draw("Same");*/
+  //c1->cd(0);
+  //c1->SetLogy();
+  //sum_h->Draw();
+  
+  return 0;
+}
