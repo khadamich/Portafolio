@@ -9,5 +9,7 @@ Read [GEANT4](https://geant4.cern.ch/) for more details.
 
 This is an overview of how the detector model looks like:
 
-![Uploading MC2.png…]()
 ![MC2](https://github.com/khadamich/Portfolio/assets/132023832/fb2f6c2c-d24a-49ce-87fc-17d711f17f7d)
+
+
+![NaI](https://github.com/khadamich/Portfolio/assets/132023832/65a4cb9d-3f11-482e-81bb-ce1c4a165998)
