@@ -1,0 +1,254 @@
+	// --------------------------------------------------------------
+//   GEANT 4 - Germanium Detector at IFUNAM
+//									
+//      For information related to this code contact: 
+//	José Luis Hernández and Osmany González Reina
+//      e-mail: luis.hernandez@ciencias.unam.mx
+// --------------------------------------------------------------
+// Comments
+//
+//                     Germanium Detector
+//                    (17th September 2018)
+//
+// DetectorConstruction program
+// --------------------------------------------------------------
+
+#include "DMXDetectorConstruction.hh"
+#include "DMXDetectorMessenger.hh"
+#include "DMXScintSD.hh"
+#include "DMXPmtSD.hh"
+#include "G4Material.hh"
+#include "G4NistManager.hh"
+#include "G4MaterialTable.hh"
+#include "G4Element.hh"
+#include "G4Isotope.hh"
+#include "G4UnitsTable.hh"
+#include "G4Box.hh"
+#include "G4Cons.hh"
+#include "G4Tubs.hh"
+#include "G4Sphere.hh"
+#include "G4Polycone.hh"
+#include "G4UnionSolid.hh"
+#include "G4MultiUnion.hh"
+#include "G4SubtractionSolid.hh"
+#include "G4LogicalVolume.hh"
+#include "G4PVPlacement.hh"
+#include "G4ThreeVector.hh"
+#include "G4RotationMatrix.hh"
+#include "G4Transform3D.hh"
+#include "G4LogicalBorderSurface.hh"
+#include "G4LogicalSkinSurface.hh"
+#include "G4OpBoundaryProcess.hh"
+#include "G4FieldManager.hh"
+#include "G4UniformElectricField.hh"
+#include "G4TransportationManager.hh"
+#include "G4MagIntegratorStepper.hh"
+#include "G4EqMagElectricField.hh"
+#include "G4ClassicalRK4.hh"
+#include "G4ChordFinder.hh"
+#include "G4SDManager.hh"
+#include "G4VisAttributes.hh"
+#include "G4Colour.hh"
+#include "G4UserLimits.hh"
+#include "G4RunManager.hh"
+#include "G4SystemOfUnits.hh"
+
+#include <math.h>
+#define PI 3.14159265
+
+DMXDetectorConstruction::DMXDetectorConstruction()  
+{
+
+
+  theUserLimitsForRoom     = 0; 
+  theUserLimitsForDetector = 0; 
+  theMaxTimeCuts      = DBL_MAX;
+  theMaxStepSize      = DBL_MAX;
+  theDetectorStepSize = DBL_MAX;
+  theRoomTimeCut      = 1000. * nanosecond;
+  theMinEkine         = 250.0*eV;
+  theRoomMinEkine     = 250.0*eV;
+  LXeSD.Put(0);                   
+
+}
+
+DMXDetectorConstruction::~DMXDetectorConstruction() 
+{
+  delete theUserLimitsForRoom;
+  delete theUserLimitsForDetector;
+  delete detectorMessenger;
+}
+
+void DMXDetectorConstruction::DefineMaterials() 
+{
+
+ #include "DMXDetectorMaterial.icc"
+
+}
+
+G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
+
+  DefineMaterials();
+ 
+  G4Colour  white   (1.0, 1.0, 1.0) ;
+  G4Colour  grey    (0.5, 0.5, 0.5) ;
+  G4Colour  lgrey   (.85, .85, .85) ;
+  G4Colour  red     (1.0, 0.5, 0.0) ;
+  G4Colour  blue    (0.0, 0.0, 1.0) ;
+  G4Colour  cyan    (0.0, 1.0, 1.0) ;
+  G4Colour  magenta (1.0, 0.0, 1.0) ; 
+  G4Colour  yellow  (1.0, 1.0, 0.0) ;
+  G4Colour  orange  (.9, 0.2, 0.0) ;
+  G4Colour  lblue   (0.0, 0.0, .75) ;
+  G4Colour  lgreen  (0.0, .75, 0.0) ;
+  G4Colour  green   (0.0, 1.0, 0.0) ;
+  G4Colour  brown   (0.7, 0.4, 0.1) ;
+
+  G4double world_radius = 100 * cm;
+  G4double env_radius = 90 * cm;
+  
+  G4double acrylicboxlenght = 50.0*cm;
+  G4double acrylicboxinsidelenght = 49.4*cm;
+
+
+  
+  G4bool checkOverlaps = true;
+
+
+
+  G4Sphere* Cavern = new G4Sphere("Cavern",0.0,world_radius,0.0*deg,360.0*deg,0.0*deg,180.0*deg);
+  world_log  = new G4LogicalVolume(Cavern, world_mat, "world_log");
+  world_phys = new G4PVPlacement(0, G4ThreeVector(0.,0.,0.),"world_phys", world_log, NULL, false, checkOverlaps);
+
+  G4VisAttributes* world_vat= new G4VisAttributes(white);
+  world_vat->SetVisibility(true);
+  world_log->SetVisAttributes(world_vat);
+
+  G4Sphere* Cavern_inside = new  G4Sphere("Cavern_inside",0.0,env_radius,0.0*deg,360.0*deg,0.0*deg,180.0*deg);
+  lab_log  = new G4LogicalVolume(Cavern_inside, lab_mat, "lab_log");
+  lab_phys = new G4PVPlacement(0, G4ThreeVector(0.,0.,0.), "lab_phys",lab_log, world_phys, false,checkOverlaps);
+
+  //G4Box* AcrylicBox = new G4Box("AcrylicBox",0.5*acrylicboxlenght,0.5*acrylicboxlenght,0.5*acrylicboxlenght);
+  //AcrylicBoxlog = new G4LogicalVolume(AcrylicBox,AcrylicBox_mat,"AcrylicBoxlog");
+  //AcrylicBoxphys = new G4PVPlacement(0, G4ThreeVector(),AcrylicBoxlog,"AcrylicBoxphys", lab_log , false, checkOverlaps);
+
+  //G4Box* AcrylicBoxInside = new G4Box("AcrylicBoxInside",0.5*acrylicboxinsidelenght,0.5*acrylicboxinsidelenght,0.5*acrylicboxinsidelenght);
+  //AcrylicBoxInsidelog = new G4LogicalVolume(AcrylicBoxInside,Boxinside_mat,"AcrylicBoxInsidelog");
+  //AcrylicBoxInsidephys = new G4PVPlacement(0, G4ThreeVector(), AcrylicBoxInsidelog,"AcrylicBoxInsidephys", AcrylicBoxlog , false, checkOverlaps);
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  
+  
+  
+  G4VisAttributes* NaIcrystalcolor = new G4VisAttributes(red);
+  NaIcrystalcolor->SetVisibility(true);
+  G4double NaIinnerradius = 0.0 * cm;
+  G4double NaIouterradius = 3.81/2 * cm;
+  G4double NaIheight = 15.24 * cm;
+
+  G4VisAttributes* STLhousingcolor = new G4VisAttributes(grey);
+  STLhousingcolor->SetVisibility(true);
+  G4double housingradius = 4.45/2* cm;
+  G4double housingheight = 16.828 * cm;
+
+  G4VisAttributes* DLScolor = new G4VisAttributes(magenta);
+  DLScolor->SetVisibility(true);
+  G4double DLS_innerradius = 4.45/2* cm;
+  G4double DLS_outerradius = 8.89/2* cm;
+  G4double DLS_height = 6.35* cm;
+  G4double DLSposz = 5.239* cm;
+
+  G4VisAttributes* sourcecolor = new G4VisAttributes(magenta);
+  sourcecolor->SetVisibility(true);
+  G4double sourceR = 12.75*mm;
+  G4double sourceH = 3.2*mm;
+  G4double sourceposz =	2 * cm;
+  
+  G4VisAttributes* Optwincolor = new G4VisAttributes(green);
+  Optwincolor->SetVisibility(true);
+  G4double Optwinouterradius = housingradius;
+  G4double Optwinheight = 0.635 * cm;
+
+  G4VisAttributes* Springcolor = new G4VisAttributes(cyan);
+  Optwincolor->SetVisibility(true);
+  G4double springradius =  housingradius - 0.165 * cm;
+  G4double springheight = 0.692 * cm;
+  G4double springposz = 7.832 * cm;
+
+  G4VisAttributes* OPTIFColor = new G4VisAttributes(yellow);
+  OPTIFColor->SetVisibility(true);
+  G4double optifcradius = housingradius - 0.165 * cm;
+  G4double optifcheight = 15.265 * cm;
+  G4double OPTIFCposz = 0.1465 * cm;
+
+  //DETECTOR LEAD SHIELD
+  G4Tubs* DLS = new G4Tubs("DLS",DLS_innerradius,DLS_outerradius,DLS_height / 2., 0. * deg, 360. * deg);
+  DLSlog = new G4LogicalVolume(DLS, DLS_mat, "DLSlog");
+  DLSphys = new G4PVPlacement(0, G4ThreeVector(0.0,0.0,-DLSposz), DLSlog,"DLSphys", lab_log , false, checkOverlaps);
+  DLSlog->SetVisAttributes(DLScolor);
+
+  //SOURCE CONTAINER
+  G4Tubs* source = new G4Tubs("source", 0, sourceR, sourceH/2., 0.*deg, 360.*deg);
+  sourcelog = new G4LogicalVolume(source, source_mat, "source_log");
+  sourcephys = new G4PVPlacement(0, G4ThreeVector(0.0,0.0,- sourceposz - (housingheight - sourceH)/2), sourcelog,"sourcephys", lab_log , false, checkOverlaps);
+  
+  //HOUSING                                                                              
+  G4Tubs* STLhousing = new G4Tubs("STLhousing", 0.0, housingradius, housingheight / 2., 0. * deg, 360. * deg);
+  STLhousinglog = new G4LogicalVolume(STLhousing, STLhousing_mat, "STLhousinglog");
+  STLhousingphys = new G4PVPlacement(0, G4ThreeVector(), STLhousinglog,"STLhousingphys", lab_log , false, checkOverlaps);
+  STLhousinglog->SetVisAttributes(STLhousingcolor);
+  
+  
+  //Optical WINDOW
+  G4Tubs* Optical_Window = new G4Tubs("Optical_Window", 0.0, Optwinouterradius,Optwinheight / 2., 0. * deg, 360. * deg);
+  Optical_Windowlog = new G4LogicalVolume(Optical_Window, Optical_Window_mat, "Optical_Windowlog");
+  Optical_Windowphys = new G4PVPlacement(0, G4ThreeVector(0.0, 0.0, (housingheight - Optwinheight)/2),Optical_Windowlog, "Optical_Windowphys",STLhousinglog, false, checkOverlaps);
+  Optical_Windowlog->SetVisAttributes(Optwincolor);
+
+  //Spring
+  G4Tubs* Spring = new G4Tubs("Spring", 0.0, springradius, springheight / 2., 0. * deg, 360. * deg);
+  Springlog = new G4LogicalVolume(Spring, spring_mat, "Springlog");
+  Springphys = new G4PVPlacement(0, G4ThreeVector(0.,0.,-springposz), Springlog,"Springphys", STLhousinglog , false, checkOverlaps);
+  Springlog->SetVisAttributes(Springcolor);
+
+
+  //OPTICAL INTERFACE
+  G4Tubs* OPTIFC = new G4Tubs("OPTIFC_tube", 0.0, optifcradius, optifcheight / 2., 0. * deg, 360. * deg);
+  OPTIFClog = new G4LogicalVolume(OPTIFC, optifc_mat, "OPTIFClog");
+  OPTIFCphys = new G4PVPlacement(0, G4ThreeVector(0.,0.,OPTIFCposz), OPTIFClog,"OPTIFCphys",STLhousinglog , false, checkOverlaps);
+  OPTIFClog->SetVisAttributes(OPTIFColor);
+
+
+
+  //NaI CRYSTAL
+  G4Tubs* NaIcrystal = new G4Tubs("NaIcrystal", NaIinnerradius, NaIouterradius, NaIheight / 2., 0. * deg, 360. * deg);
+  NaIcrystallog = new G4LogicalVolume(NaIcrystal, NaIcrystal_mat, "NaIcrystallog");
+  NaIcrystalphys = new G4PVPlacement(0, G4ThreeVector(0.0,0.0,(NaIheight - optifcheight)/2), NaIcrystallog, "NaIcrystalphys", OPTIFClog , false, checkOverlaps);
+  NaIcrystallog->SetVisAttributes(NaIcrystalcolor);
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+  return world_phys;
+
+}
+
+void DMXDetectorConstruction::ConstructSDandField()	
+{
+    if (LXeSD.Get() == 0)
+      {
+        G4String name="/DMXDet/LXeSD";
+        DMXScintSD* aSD = new DMXScintSD(name);
+        LXeSD.Put(aSD);
+      }
+    G4SDManager::GetSDMpointer()->AddNewDetector(LXeSD.Get());
+    if (NaIcrystallog)
+      SetSensitiveDetector(NaIcrystallog,LXeSD.Get());
+
+    return;
+
+}
+
+
+
+
