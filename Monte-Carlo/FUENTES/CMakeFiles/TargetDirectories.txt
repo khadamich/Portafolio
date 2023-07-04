@@ -1,0 +1,8 @@
+/Users/michell/Documents/NaI/MC/FUENTES/CMakeFiles/install/local.dir
+/Users/michell/Documents/NaI/MC/FUENTES/CMakeFiles/install/strip.dir
+/Users/michell/Documents/NaI/MC/FUENTES/CMakeFiles/install.dir
+/Users/michell/Documents/NaI/MC/FUENTES/CMakeFiles/rebuild_cache.dir
+/Users/michell/Documents/NaI/MC/FUENTES/CMakeFiles/underground_physics.dir
+/Users/michell/Documents/NaI/MC/FUENTES/CMakeFiles/edit_cache.dir
+/Users/michell/Documents/NaI/MC/FUENTES/CMakeFiles/list_install_components.dir
+/Users/michell/Documents/NaI/MC/FUENTES/CMakeFiles/DMX.dir

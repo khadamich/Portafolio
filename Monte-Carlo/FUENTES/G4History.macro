@@ -1,0 +1,77 @@
+/vis/open OGL
+/vis/sceneHandler/create OGL
+/vis/viewer/create ! ! 600
+/vis/viewer/refresh
+/tracking/storeTrajectory 1
+/vis/drawView 70 -90 0. 0. cm 1.5
+/vis/viewer/set/viewpointThetaPhi 70 -90 deg
+/vis/viewer/panTo 0. 0. cm
+/vis/viewer/zoomTo 1.5
+/vis/viewer/dollyTo 0 cm
+/vis/drawVolume
+/vis/scene/create
+/vis/scene/add/volume world
+/vis/sceneHandler/attach
+/vis/viewer/update
+/vis/viewer/set/style s
+/vis/viewer/refresh
+/vis/viewer/set/hiddenEdge 1
+/vis/viewer/refresh
+/vis/viewer/set/picking false
+/vis/viewer/refresh
+/vis/set/touchable world_phys 1 lab_phys 1
+/vis/set/touchable world_phys 1 lab_phys 1 DLSphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 sourcephys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 Optical_Windowphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 OPTIFCphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 OPTIFCphys 1 NaIcrystalphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 Springphys 1
+/vis/set/touchable world_phys 1 lab_phys 1
+/vis/set/touchable world_phys 1 lab_phys 1 DLSphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 sourcephys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 Optical_Windowphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 OPTIFCphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 OPTIFCphys 1 NaIcrystalphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 Springphys 1
+/vis/set/touchable world_phys 1
+/vis/set/touchable world_phys 1 lab_phys 1
+/vis/set/touchable world_phys 1 lab_phys 1 DLSphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 sourcephys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 Optical_Windowphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 OPTIFCphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 OPTIFCphys 1 NaIcrystalphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 Springphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 DLSphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 Optical_Windowphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 OPTIFCphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 OPTIFCphys 1 NaIcrystalphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 Springphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 Optical_Windowphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 OPTIFCphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 OPTIFCphys 1 NaIcrystalphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 Springphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 sourcephys 1
+/vis/viewer/set/picking false
+/vis/viewer/refresh
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 Optical_Windowphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 OPTIFCphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 OPTIFCphys 1 NaIcrystalphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 Springphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 Optical_Windowphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 Optical_Windowphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 Springphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 Springphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 OPTIFCphys 1 NaIcrystalphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 OPTIFCphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 OPTIFCphys 1 NaIcrystalphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 Optical_Windowphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 Optical_Windowphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 OPTIFCphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 OPTIFCphys 1 NaIcrystalphys 1
+/vis/set/touchable world_phys 1 lab_phys 1 STLhousingphys 1 Springphys 1

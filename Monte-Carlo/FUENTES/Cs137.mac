@@ -1,0 +1,28 @@
+#Este es un ejemplo para simular las fuentes puntuales colocadas en el stand del detector.
+/dmx/draw/drawColours custom
+/dmx/draw/gammaColour green
+/dmx/draw/drawTracks all
+/dmx/draw/drawHits 1
+/dmx/savePmt  0
+/dmx/saveHits 1
+/dmx/rootfile Cs137.root
+
+# radioactive decay module
+/grdm/analogueMC 1
+/grdm/verbose 0
+/grdm/allVolumes
+
+# using GPS
+/gps/source/intensity 1
+/gps/ion 55 137 #Información del isótopo que voy a simular
+/gps/energy 0.0 eV
+/gps/pos/type Point
+/gps/pos/centre 0.0 0.0 -10.254 #Esta posición corresponde a la muestra colocada en la posición más cercana al detector sobre el stand (a 2cm de la tapa del detector)
+
+#/random/setSeeds 5298 1140021218
+
+
+/run/beamOn 1000000
+
+
+

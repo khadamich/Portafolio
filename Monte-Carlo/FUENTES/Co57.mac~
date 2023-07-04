@@ -1,0 +1,27 @@
+/dmx/draw/drawColours custom
+/dmx/draw/gammaColour green
+/dmx/draw/drawTracks all
+/dmx/draw/drawHits 1
+/dmx/savePmt  0
+/dmx/saveHits 1
+/dmx/rootfile Co57.root
+
+# radioactive decay module
+/grdm/analogueMC 1
+/grdm/verbose 0
+/grdm/allVolumes
+
+# using GPS
+/gps/source/intensity 1
+/gps/ion 27 57
+/gps/energy 0.0 eV
+/gps/pos/type Point
+/gps/pos/centre 0.0 0.0 -10.254
+
+#/random/setSeeds 5298 1140021218
+
+
+/run/beamOn 200000
+
+
+
