@@ -8,4 +8,4 @@ Read [GEANT4](https://geant4.cern.ch/) for more details.
 
 This is an overview of how the detector model looks like:
 
-![Uploading MC2.png…](Detector model in Geant4 (left) and Real Detector SetUp (right))
+![Uploading MC2.png…]()
